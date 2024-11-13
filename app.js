@@ -15,14 +15,14 @@ app.use(express.urlencoded({ extended: true }));
 //conocer los distintos controladores, saber donde estan, traelos como constantes locales
 const personaController = require('./src/controller/personaController');
 const usuarioController = require('./src/controller/usuarioController');
-const reservaController = require('./src/controller/reservaController');
-const vehiculoController = require('./src/controller/vehiculoController');
+const provinciaController = require('./src/controller/provinciaController');
+const localidadController = require('./src/controller/localidadController');
 
 //redireccionar las distintas peticiones a su correspondiente controlador.
 app.use("/persona", personaController); //ejemplo de peticion --> https://localhost:8080/persona/listar_personas
 app.use('/usuario', usuarioController);
-app.use('/reserva', reservaController);
-app.use("/vehiculo", vehiculoController); //ejemplo de peticion --> https://localhost:8080/vehiculo/crear_vehiculo
+app.use('/provincia', provinciaController);
+app.use("/localidad", localidadController); //ejemplo de peticion --> https://localhost:8080/localidad/crear_localidad
 
 
 
