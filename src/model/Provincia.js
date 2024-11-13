@@ -32,21 +32,21 @@ const Provincia = {
         }
     },
 
- /*   update: async (nombre, apellido, dni, cuil, fec_nac, email, cel, id_dom) => {
-        const query = 'UPDATE PERSONA SET nombre = ?, apellido = ?, dni = ?, cuil = ?, fec_nac = ?, email = ?, cel = ?, id_dom = ?  WHERE dni = ?';
+   update: async (nombre_prov) => {
+        const query = 'UPDATE PROVINCIA SET nombre_prov = ?  WHERE id_prov = ?';
         try {
-            const result = await db.execute(query, [nombre, apellido, dni, cuil, fec_nac, email, cel, id_dom]);
+            const result = await db.execute(query, [nombre_prov]);
             if (result.affectedRows === 0) {
-                const error = new Error(`No se encontro una persona con el DNI: ${dni}`);
+                const error = new Error(`No se encontro una Provincia con el Nombre: ${nombre_prov}`);
                 error.statusCode = 404;
                 throw error;
             }
-            return { message: "Persona actualizada con exito", detail: result };
+            return { message: "Provincia actualizada con exito", detail: result };
         } catch (error) {
-            throw new Error('Error al actualizar la persona: ' + error.message);
+            throw new Error('Error al actualizar la Provincia: ' + error.message);
         }
     },
-*/
+    
     delete: async (nombre_prov) => {
         try {
             const query = 'DELETE FROM PROVINCIA WHERE nombre_prov = ?';

@@ -11,7 +11,7 @@ const { personaRules, validate } = require('../middleware/validations.js');
 router.get('/', listar_provincia);
 router.get('/:nombre_prov', buscarPorNombre);
 router.post('/', provinciaRules(), validate, crear_provincia);
-router.put('/:nombre_prov', actualizar_provincia);
+router.put('/:id_prov:nombre_prov', actualizar_provincia);
 router.delete('/:nombre_prov', eliminar_provincia);
 
 // Funciones CRUD
@@ -51,10 +51,10 @@ async function crear_provincia(req, res) {
 }
 
 async function actualizar_provincia(req, res) {
-    const { nombre_prov } = req.params;
-    //const { nombre, apellido, cuil, fec_nac, email, cel, id_dom } = req.body;
+    const { id_prov, nombre_prov } = req.params;
+    //const { nombre_prov } = req.body;
     try {
-        await model.update(nombre_prov);
+        await model.update(id_prov);
         res.status(200).json({ message: 'Provincia actualizada correctamente' });
     } catch (error) {
         const statusCode = error.statusCode || 500;
