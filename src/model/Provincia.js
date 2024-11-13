@@ -1,7 +1,7 @@
 const db = require('../config/config_database');
 
 
-const Provincia = {
+const provincia = {
 
     create: async (nombre_prov) => {
         const query = 'INSERT INTO PROVINCIA (nombre_prov) VALUES (?)';
@@ -22,20 +22,20 @@ const Provincia = {
         }
     },
 
-    findByDni: async (nombre_prov) => {
-        const query = 'SELECT * FROM PERSONA WHERE nombre_prov = ?';
+    findByNombre: async (nombre_prov) => {
+        const query = 'SELECT * FROM PROVINCIA WHERE nombre_prov = ?';
         try {
-            const [rows] = await db.execute(query, [dni]);
+            const [rows] = await db.execute(query, [nombre_prov]);
             return rows;
         } catch (error) {
             throw new Error('Error al buscar la PROVINCIA por NOMBRE: ' + error.message);
         }
     },
 
-   update: async (nombre_prov) => {
+   update: async (nombre_prov, id_prov) => {
         const query = 'UPDATE PROVINCIA SET nombre_prov = ?  WHERE id_prov = ?';
         try {
-            const result = await db.execute(query, [nombre_prov]);
+            const result = await db.execute(query, [id_prov]);
             if (result.affectedRows === 0) {
                 const error = new Error(`No se encontro una Provincia con el Nombre: ${nombre_prov}`);
                 error.statusCode = 404;
@@ -66,4 +66,4 @@ const Provincia = {
     }
 };
 
-module.exports = Provincia;
+module.exports = provincia;

@@ -16,14 +16,15 @@ app.use(express.urlencoded({ extended: true }));
 const personaController = require('./src/controller/personaController');
 const usuarioController = require('./src/controller/usuarioController');
 const provinciaController = require('./src/controller/provinciaController');
-const localidadController = require('./src/controller/localidadController');
+const materiaController = require('./src/controller/materiaController');
+const cursoController = require('./src/controller/cursoController');
 
 //redireccionar las distintas peticiones a su correspondiente controlador.
 app.use("/persona", personaController); //ejemplo de peticion --> https://localhost:8080/persona/listar_personas
 app.use('/usuario', usuarioController);
 app.use('/provincia', provinciaController);
-app.use("/localidad", localidadController); //ejemplo de peticion --> https://localhost:8080/localidad/crear_localidad
-
+app.use("/materia", materiaController); //ejemplo de peticion --> https://localhost:8080/materia/crear_materia
+app.use('/curso', cursoController);
 
 
 // funcion que intenta iniciar el servidor en el puerto especificado o en el siguiente disponible

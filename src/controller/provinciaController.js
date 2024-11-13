@@ -1,4 +1,4 @@
-const model = require('./model/Provincia.js');
+const model = require('../model/provincia.js');
 const express = require('express');
 const router = express.Router();
 
@@ -11,7 +11,7 @@ const { personaRules, validate } = require('../middleware/validations.js');
 router.get('/', listar_provincia);
 router.get('/:nombre_prov', buscarPorNombre);
 router.post('/', provinciaRules(), validate, crear_provincia);
-router.put('/:id_prov:nombre_prov', actualizar_provincia);
+router.put('/:id_prov', actualizar_provincia);
 router.delete('/:nombre_prov', eliminar_provincia);
 
 // Funciones CRUD
@@ -29,7 +29,7 @@ async function listar_provincia(req, res) {
 async function buscarPorNombre(req, res) {
     const { nombre_prov } = req.params;
     try {
-        const results = await model.findByDni(nombre_prov);
+        const results = await model.findByNombre(nombre_prov);
         if (results.length === 0) {
             return res.status(404).json({ message: 'Provincia no encontrada' });
         }
@@ -51,10 +51,10 @@ async function crear_provincia(req, res) {
 }
 
 async function actualizar_provincia(req, res) {
-    const { id_prov, nombre_prov } = req.params;
-    //const { nombre_prov } = req.body;
+    const { id_prov} = req.params;
+    const { nombre_prov } = req.body;
     try {
-        await model.update(id_prov);
+        await model.update(nombre_prov, id_prov);
         res.status(200).json({ message: 'Provincia actualizada correctamente' });
     } catch (error) {
         const statusCode = error.statusCode || 500;
