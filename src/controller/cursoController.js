@@ -11,7 +11,7 @@ const { personaRules, validate } = require('../middleware/validations.js');
 router.get('/', listar_cursos);
 router.get('/:nom_curso', buscarPorCurso);
 router.post('/', cursoRules(), validate, crear_curso);
-router.put('/:nom_curso', actualizar_curso);
+router.put('/:id_curso', actualizar_curso);
 router.delete('/:nom_curso', eliminar_curso);
 
 // Funciones CRUD

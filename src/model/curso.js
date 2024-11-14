@@ -32,12 +32,12 @@ const curso = {
         }
     },
 
-    update: async (nom_materia, id_materia) => {
-        const query = 'UPDATE MATERIA SET nom_materia = ? WHERE id_materia = ?';
+    update: async (nom_curso,  id_curso) => {
+        const query = 'UPDATE CURSO SET curso = ? WHERE id_curso = ?';
         try {
-            const result = await db.execute(query, [id_materia]);
+            const result = await db.execute(query, [nom_curso, id_curso]);
             if (result.affectedRows === 0) {
-                const error = new Error(`No se encontro la meteria con el nombre: ${nom_materia}`);
+                const error = new Error(`No se encontro la meteria con el nombre: ${nom_curso}`);
                 error.statusCode = 404;
                 throw error;
             }
