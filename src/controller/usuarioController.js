@@ -10,7 +10,7 @@ const { rulesUser, validate } = require('../middleware/validations.js');
 // ----------------------------------------------------------
 
 router.get('/', listar_usuarios);
-router.get('/:id_usr', buscarPorID);
+router.get('/:nombre_usr', buscarPorNombre);
 router.post('/', rulesUser(), validate, crear_usuario);
 router.put('/:id_usr', actualizar_usuario);
 router.delete('/:id_usr', eliminar_usuario);
@@ -41,10 +41,10 @@ async function listar_usuarios(req, res) {
 }
 
 
-async function buscarPorID(req, res) {
-    const { id_usr } = req.params;
+async function buscarPorNombre(req, res) {
+    const { nombre_usr } = req.params;
     try {
-        const result = await model.findById(id_usr);
+        const result = await model.findByNombre(nombre_usr);
         if (result.length === 0) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
@@ -55,9 +55,9 @@ async function buscarPorID(req, res) {
 }
 
 async function crear_usuario(req, res) {
-    const { id_usr, rol_usr, nombre_usr, psw_usr } = req.body;
+    const { rol_usr, nombre_usr, psw_usr, id_pers } = req.body;
     try {
-        const result = await model.create(id_usr, rol_usr, nombre_usr, psw_usr);
+        const result = await model.create(rol_usr, nombre_usr, psw_usr, id_pers);
         res.status(201).json(result);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -68,9 +68,9 @@ async function crear_usuario(req, res) {
 
 async function actualizar_usuario(req, res) {
     const { id_usr } = req.params;
-    const { rol_usr, nombre_usr, psw_usr } = req.body;
+    const { rol_usr, nombre_usr, psw_usr, id_pers } = req.body;
     try {
-        await model.update(id_usr, rol_usr, nombre_usr, psw_usr);
+        await model.update(id_usr, rol_usr, nombre_usr, psw_usr, id_pers );
         res.status(200).json({ message: 'Usuario actualizado correctamente' });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -89,8 +89,8 @@ async function eliminar_usuario(req, res) {
 
 async function login(req, res) {
     try {
-        const { nombre, psw_usr } = req.body;
-        const [result] = await model.findByMail(nombre);
+        const { nombre_usr, psw_usr } = req.body;
+        const [result] = await model.findByMail(nombre_usr);
         const iguales = bcrypt.compareSync(psw_usr, result.psw_usr);
         if (iguales) {
             let user = {

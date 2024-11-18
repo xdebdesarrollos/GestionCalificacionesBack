@@ -5,14 +5,14 @@ const bcrypt = require('bcrypt');
 const Usuario = {
 
     //registrarse como usuario
-    create: async (mail, pass, persona_id) => {
-        const hashedPass = await bcrypt.hash(pass, 10); // Hasheamos la contraseña y reemplazamos pass por hashedPass
+    create: async (rol_usr, nombre_usr, pass_usr, id_pers) => {
+        const hashedPass = await bcrypt.hash(pass_usr, 10); // Hasheamos la contraseña y reemplazamos pass por hashedPass
         //let textoHashed = bcrypt.hashSync("texto a encriptar",10);
         try {
-            const params = [mail, hashedPass, persona_id];
-            const consulta = 'INSERT INTO usuario (mail, pass, persona_id) VALUES (?, ?, ?)';
+            const params = [rol_usr, nombre_usr, hashedPass, id_pers];
+            const consulta = 'INSERT INTO usuario (rol_usr, nombre_usr, pass_usr, id_pers) VALUES (?, ?, ?, ?)';
             const result = await db.execute(consulta, params);
-            return { message: `Usuario ${mail} creado con exito`, detail: result };
+            return { message: `Usuario ${nombre_usr} creado con exito`, detail: result };
         } catch (error) {
             if (error.code === 'ER_DUP_ENTRY') {
                 throw new Error('Existe un usuario con los mismos datos: ' + error.message);
@@ -38,13 +38,13 @@ const Usuario = {
 
 
     //un metodo que utiliza la funcion del login para saber si existe ese usuario o no
-    findByMail: async (mail) => {
+    findByNombre: async (nombre_usr) => {
         try {
-            const consulta = `SELECT p.nombre, p.apellido, u.mail, u.pass
-                                FROM usuario u INNER JOIN persona p ON u.persona_id = p.dni AND u.mail = ?`;
-            const [result] = await db.execute(consulta, [mail]);
+            const consulta = `SELECT u.nombre_usr, p.nombre, p.apellido, p.email, u.psw_usr
+                              FROM usuario u INNER JOIN persona p ON u.id_pers = p.id_pers AND u.nombre_usr = ?`;
+            const [result] = await db.execute(consulta, [nombre_usr]);
             if (result.length == 0) {
-                throw new Error(`Usuario no encontrado con el mail : ${mail}`);
+                throw new Error(`Usuario no encontrado con el mail : ${nombre_usr}`);
             }
             return result; //si no saltó el error en el if anterior entoces se devuelve el resultado
         } catch (error) {
@@ -53,30 +53,30 @@ const Usuario = {
     },
 
 
-    findById: async (id) => {
-        const query = 'SELECT * FROM usuario WHERE usuario_id = ?';
+    findById: async (id_usr) => {
+        const query = 'SELECT * FROM usuario WHERE id_usr = ?';
         try {
-            const [rows] = await db.execute(query, [id]);
+            const [rows] = await db.execute(query, [id_usr]);
             return rows;
         } catch (error) {
             throw new Error('Error al buscar el usuario: ' + error.message);
         }
     },
 
-    update: async (id, mail, pass, persona_id) => {
-        const hashedPass = await bcrypt.hash(pass, 10);
-        const query = 'UPDATE usuario SET mail = ?, pass = ?, persona_id = ? WHERE usuario_id = ?';
+    update: async (rol_usr, nombre_usr, psw_usr, id_usr) => {
+        const hashedPass = await bcrypt.hash(psw_usr, 10);
+        const query = 'UPDATE usuario SET rol_usr = ?, nombre_usr = ?, psw_usr = ? WHERE id_usr = ?';
         try {
-            await db.execute(query, [mail, hashedPass, persona_id, id]);
+            await db.execute(query, [rol_usr, nombre_usr, hashedPass, id_usr]);
         } catch (error) {
             throw new Error('Error al actualizar el usuario: ' + error.message);
         }
     },
 
-    delete: async (id) => {
+    delete: async (id_usr) => {
         const query = 'DELETE FROM usuario WHERE usuario_id = ?';
         try {
-            await db.execute(query, [id]);
+            await db.execute(query, [id_usr]);
         } catch (error) {
             throw new Error('Error al eliminar el usuario: ' + error.message);
         }
