@@ -59,6 +59,12 @@ async function crear_usuario(req, res) {
     try {
         const result = await model.create(rol_usr, nombre_usr, psw_usr, id_pers);
         res.status(201).json(result);
+        if (rol_usr == 'Profesor') {
+            
+        } else {
+            
+        }
+        
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

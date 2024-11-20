@@ -3,10 +3,8 @@ const { validationResult, body, check } = require("express-validator");
 //separamos las reglas por un lado
 const rulesUser = () => [
     body('nombre_usr')
-        .notEmpty().withMessage('el Nombre de usuario no puede estar vacio')
-        .isEmail().withMessage('por favor ingrese un Nombre de usuario valido')
-        .normalizeEmail(),
-    body('pass_usr')
+        .notEmpty().withMessage('el Nombre de usuario no puede estar vacio'),
+    body('psw_usr')
         .notEmpty().withMessage('la contraseña no puede estar vacia')
         .isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres')
         .isLength({ max: 16 }).withMessage('La contraseña debe tener menos 16 caracteres')

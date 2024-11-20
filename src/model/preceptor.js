@@ -1,24 +1,24 @@
 const db = require('../config/config_database');
 
 
-const Persona = {
+const Preceptor = {
 
-    create: async (nombre, apellido, dni, cuil, fec_nac, email, cel, domicilio, id_loc) => {
-        const query = 'INSERT INTO PERSONA (nombre, apellido, dni, cuil, fec_nac, email, cel, domicilio, id_loc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    create: async (id_sr, id_usr) => {
+        const query = 'INSERT INTO PRECEPTOR (id_sr, id_usr) VALUES (?, ?)';
         try {
-            await db.execute(query, [nombre, apellido, dni, cuil, fec_nac, email, cel, domicilio, id_loc]);
+            await db.execute(query, [id_sr, id_usr]);
         } catch (error) {
-            throw new Error('Error al crear la persona: ' + error.message);
+            throw new Error('Error al crear el Preceptor: ' + error.message);
         }
     },
 
     findAll: async () => {
         try {
-            const query = 'SELECT * FROM PERSONA';
+            const query = 'SELECT * FROM PRECEPTOR';
             const [rows] = await db.execute(query);
             return rows;
         } catch (error) {
-            throw new Error('Error al obtener las personas: ' + error.message);
+            throw new Error('Error al obtener el Preceptor: ' + error.message);
         }
     },
 
@@ -32,16 +32,16 @@ const Persona = {
         }
     },
 
-    update: async (nombre, apellido, dni, cuil, fec_nac, email, cel, id_dom) => {
-        const query = 'UPDATE PERSONA SET nombre = ?, apellido = ?, dni = ?, cuil = ?, fec_nac = ?, email = ?, cel = ?, id_dom = ?  WHERE dni = ?';
+    update: async (id_sr, id_usr, dni) => {
+        const query = 'UPDATE PRECEPTOR SET id_sr = ?, id_usr = ?  WHERE dni = ?';
         try {
-            const result = await db.execute(query, [nombre, apellido, dni, cuil, fec_nac, email, cel, id_dom]);
+            const result = await db.execute(query, [id_sr, id_usr, dni]);
             if (result.affectedRows === 0) {
-                const error = new Error(`No se encontro una persona con el DNI: ${dni}`);
+                const error = new Error(`No se encontro el Preceptor con el DNI: ${dni}`);
                 error.statusCode = 404;
                 throw error;
             }
-            return { message: "Persona actualizada con exito", detail: result };
+            return { message: "Preceptor actualizada con exito", detail: result };
         } catch (error) {
             throw new Error('Error al actualizar la persona: ' + error.message);
         }
@@ -66,4 +66,4 @@ const Persona = {
     }
 };
 
-module.exports = Persona;
+module.exports = Preceptor;

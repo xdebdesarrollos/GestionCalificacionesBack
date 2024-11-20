@@ -10,7 +10,7 @@ const { personaRules, validate } = require('../middleware/validations.js');
 
 router.get('/', listar_provincia);
 router.get('/:nombre_prov', buscarPorNombre);
-router.post('/', provinciaRules(), validate, crear_provincia);
+router.post('/', personaRules(), validate, crear_provincia);
 router.put('/:id_prov', actualizar_provincia);
 router.delete('/:nombre_prov', eliminar_provincia);
 

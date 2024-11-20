@@ -1,4 +1,4 @@
-const model = require('../model/persona');
+const model = require('../model/tutor');
 const express = require('express');
 const router = express.Router();
 
@@ -8,15 +8,15 @@ const { personaRules, validate } = require('../middleware/validations.js');
 // -- Rutas de escucha (endpoint) disponibles para PERSONA --
 // ----------------------------------------------------------
 
-router.get('/', listar_personas);
+router.get('/', listar_tutores);
 router.get('/:dni', buscarPorDni);
-router.post('/', crear_persona);
-router.put('/:dni', actualizar_persona);
-router.delete('/:dni', eliminar_persona);
+router.post('/', crear_tutor);
+router.put('/:dni', actualizar_tutor);
+router.delete('/:dni', eliminar_tutor);
 
 // Funciones CRUD
 
-async function listar_personas(req, res) {
+async function listar_tutores(req, res) {
     try {
         const results = await model.findAll();
         res.status(200).json(results);
@@ -31,7 +31,7 @@ async function buscarPorDni(req, res) {
     try {
         const results = await model.findByDni(dni);
         if (results.length === 0) {
-            return res.status(404).json({ message: 'Persona no encontrada' });
+            return res.status(404).json({ message: 'Tutor no encontrado' });
         }
         res.status(200).json(results[0]);
     } catch (err) {
@@ -40,38 +40,37 @@ async function buscarPorDni(req, res) {
 }
 
 
-async function crear_persona(req, res) {
-    const { nombre, apellido, dni, cuil, fec_nac, email, cel, domicilio, id_loc } = req.body;
+async function crear_tutor(req, res) {
+    const { id_usr } = req.body;
     try {
-        await model.create(nombre, apellido, dni, cuil, fec_nac, email, cel, domicilio, id_loc);
-        res.status(201).json({ message: 'Persona creada correctamente' });
+        await model.create(id_usr);
+        res.status(201).json({ message: 'Tutor creado correctamente' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 }
 
-async function actualizar_persona(req, res) {
+async function actualizar_tutor(req, res) {
     const { dni } = req.params;
-    const { nombre, apellido, cuil, fec_nac, email, cel, id_dom } = req.body;
+    const { id_usr } = req.body;
     try {
-        await model.update(nombre, apellido, dni, cuil, fec_nac, email, cel, id_dom);
-        res.status(200).json({ message: 'Persona actualizada correctamente' });
+        await model.update(id_usr, dni);
+        res.status(200).json({ message: 'Tutor actualizado correctamente' });
     } catch (error) {
         const statusCode = error.statusCode || 500;
         res.status(statusCode).send(error.message);
     }
 }
 
-async function eliminar_persona(req, res) {
+async function eliminar_tutor(req, res) {
     const { dni } = req.params;
     try {
         const result = await model.delete(dni);
 
-        res.status(200).json({ message: 'Persona eliminada correctamente' });
+        res.status(200).json({ message: 'tutor eliminado correctamente' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 }
-
 
 module.exports = router;
