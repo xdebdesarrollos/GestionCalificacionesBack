@@ -22,6 +22,7 @@ const preceptorController = require('./src/controller/preceptorController');
 const profesorController = require('./src/controller/profesorController');
 const tutorController = require('./src/controller/tutorController');
 const alumnoController = require('./src/controller/alumnoController');
+const localidadController = require('./src/controller/localidadController');
 
 //redireccionar las distintas peticiones a su correspondiente controlador.
 app.use("/persona", personaController); //ejemplo de peticion --> https://localhost:8080/persona/listar_personas
@@ -33,6 +34,7 @@ app.use('/preceptor', preceptorController);
 app.use('/profesor', profesorController);
 app.use('/tutor', tutorController);
 app.use('/alumno', alumnoController);
+app.use('/localidad', localidadController);
 
 
 // funcion que intenta iniciar el servidor en el puerto especificado o en el siguiente disponible
