@@ -44,7 +44,14 @@ const personaRules = () => [
         .withMessage('La dirección solo puede contener letras, números y los caracteres: , . -')
 ];
 
-
+const localidadRules = () => [
+    // Validación para nombre (solo letras, mínimo 2 caracteres)
+    check('nom_loc')
+        .isAlpha('es-ES', { ignore: ' ' })
+        .withMessage('El nombre debe contener letras')
+        .isLength({ min: 2, max: 30 })
+        .withMessage('El nombre debe tener entre 2 y 50 caracteres'),
+];
 
 
 // y el atrapador de errores por otro lado
@@ -56,4 +63,4 @@ const validate = (req, res, next) => {
     next();
 }
 
-module.exports = { validate, rulesUser, personaRules };
+module.exports = { validate, rulesUser, personaRules, localidadRules };

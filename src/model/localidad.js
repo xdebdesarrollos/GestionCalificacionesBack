@@ -1,12 +1,12 @@
 const db = require('../config/config_database');
 
 
-const provincia = {
+const localidad = {
 
-    create: async (nombre_loc) => {
-        const query = 'INSERT INTO LOCALIDAD (nombre_loc) VALUES (?)';
+    create: async (nom_loc, id_prov) => {
+        const query = 'INSERT INTO LOCALIDAD (nom_loc, id_prov) VALUES (?, ?)';
         try {
-            await db.execute(query, [nombre_loc]);
+            await db.execute(query, [nom_loc, id_prov]);
         } catch (error) {
             throw new Error('Error al crear la Localidad: ' + error.message);
         }
@@ -22,22 +22,22 @@ const provincia = {
         }
     },
 
-    findByNombre: async (nombre_loc) => {
+    findByNombre: async (nom_loc) => {
         const query = 'SELECT * FROM LOCALIDAD WHERE nombre_loc = ?';
         try {
-            const [rows] = await db.execute(query, [nombre_loc]);
+            const [rows] = await db.execute(query, [nom_loc]);
             return rows;
         } catch (error) {
             throw new Error('Error al buscar la LOCALIDAD por NOMBRE: ' + error.message);
         }
     },
 
-   update: async (nombre_loc, id_loc) => {
+   update: async (nom_loc, id_loc) => {
         const query = 'UPDATE LOCALIDAD SET nombre_loc= ?  WHERE id_loc = ?';
         try {
             const result = await db.execute(query, [id_loc]);
             if (result.affectedRows === 0) {
-                const error = new Error(`No se encontro una LOCALIDAD con el Nombre: ${nombre_loc}`);
+                const error = new Error(`No se encontro una LOCALIDAD con el Nombre: ${nom_loc}`);
                 error.statusCode = 404;
                 throw error;
             }
@@ -47,13 +47,13 @@ const provincia = {
         }
     },
     
-    delete: async (nombre_loc) => {
+    delete: async (nom_loc) => {
         try {
-            const query = 'DELETE FROM LOCALIDAD WHERE nombre_loc = ?';
-            const result = await db.execute(query, [nombre_loc]);
+            const query = 'DELETE FROM LOCALIDAD WHERE nom_loc = ?';
+            const result = await db.execute(query, [nom_loc]);
 
             if (result.affectedRows === 0) {
-                const error = new Error(`No se encontro una Localidad con el NOMBRE: ${nombre_loc}`);
+                const error = new Error(`No se encontro una Localidad con el NOMBRE: ${nom_loc}`);
                 error.statusCode = 404;
                 throw error;
             }
@@ -66,4 +66,4 @@ const provincia = {
     }
 };
 
-module.exports = provincia;
+module.exports = localidad;

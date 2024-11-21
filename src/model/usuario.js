@@ -142,7 +142,6 @@ const Usuario = {
 
 module.exports = Usuario;
 
-
 /*
 const sql = 'SELECT * FROM persona WHERE dni = ?';
 db.execute(sql, [dni], (err, results) => {
