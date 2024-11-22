@@ -47,10 +47,25 @@ const personaRules = () => [
 const localidadRules = () => [
     // Validación para nombre (solo letras, mínimo 2 caracteres)
     check('nom_loc')
-        .isAlpha('es-ES', { ignore: ' ' })
-        .withMessage('El nombre debe contener letras')
+        .notEmpty().withMessage('el Nombre de la Localidad no puede estar vacio')
         .isLength({ min: 2, max: 30 })
         .withMessage('El nombre debe tener entre 2 y 50 caracteres'),
+];
+
+const cursoRules = () => [
+    // Validación para nombre (solo letras, mínimo 2 caracteres)
+    check('nom_curso')
+        .notEmpty().withMessage('el Nombre de Curso no puede estar vacio')
+        .isLength({ min: 2, max: 2 })
+        .withMessage('El curso debe tener 2 caracteres'),
+];
+
+const materiaRules = () => [
+    // Validación para nombre (solo letras, mínimo 2 caracteres)
+    check('nom_materia')
+        .notEmpty().withMessage('el Nombre de la Materia no puede estar vacio')
+        .isLength({ min: 2, max: 30 })
+        .withMessage('El curso debe tener entre 2 y 30 caracteres'),
 ];
 
 
@@ -63,4 +78,4 @@ const validate = (req, res, next) => {
     next();
 }
 
-module.exports = { validate, rulesUser, personaRules, localidadRules };
+module.exports = { validate, rulesUser, personaRules, localidadRules, cursoRules, materiaRules };

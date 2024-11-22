@@ -2,7 +2,7 @@ const model = require('../model/materia');
 const express = require('express');
 const router = express.Router();
 
-const { personaRules, validate } = require('../middleware/validations.js');
+const { materiaRules, validate } = require('../middleware/validations.js');
 
 // ----------------------------------------------------------
 // -- Rutas de escucha (endpoint) disponibles para PERSONA --
@@ -10,7 +10,7 @@ const { personaRules, validate } = require('../middleware/validations.js');
 
 router.get('/', listar_materias);
 router.get('/:nom_materia', buscarPorMateria);
-router.post('/', personaRules(), validate, crear_materia);
+router.post('/', materiaRules(), validate, crear_materia);
 router.put('/:nom_materia', actualizar_materia);
 router.delete('/:nom_materia', eliminar_materia);
 

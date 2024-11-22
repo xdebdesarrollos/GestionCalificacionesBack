@@ -2,7 +2,7 @@ const model = require('../model/curso');
 const express = require('express');
 const router = express.Router();
 
-const { personaRules, validate } = require('../middleware/validations.js');
+const { cursoRules, validate } = require('../middleware/validations.js');
 
 // ----------------------------------------------------------
 // -- Rutas de escucha (endpoint) disponibles para PERSONA --
@@ -10,7 +10,7 @@ const { personaRules, validate } = require('../middleware/validations.js');
 
 router.get('/', listar_cursos);
 router.get('/:nom_curso', buscarPorCurso);
-router.post('/', personaRules(), validate, crear_curso);
+router.post('/', cursoRules(), validate, crear_curso);
 router.put('/:id_curso', actualizar_curso);
 router.delete('/:nom_curso', eliminar_curso);
 

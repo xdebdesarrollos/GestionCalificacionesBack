@@ -3,10 +3,10 @@ const db = require('../config/config_database');
 
 const curso = {
 
-    create: async (nom_materia) => {
-        const query = 'INSERT INTO MATERIA (nom_materia) VALUES (?)';
+    create: async (nom_curso) => {
+        const query = 'INSERT INTO CURSO (nom_curso) VALUES (?)';
         try {
-            await db.execute(query, [nom_materia]);
+            await db.execute(query, [nom_curso]);
         } catch (error) {
             throw new Error('Error al crear la MATERIA: ' + error.message);
         }
