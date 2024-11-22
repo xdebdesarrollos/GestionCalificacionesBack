@@ -1,14 +1,12 @@
 const db = require('../config/config_database');
 
 
-const Persona = {
+const Register = {
 
     create: async (nombre, apellido, dni, cuil, fec_nac, email, cel, domicilio, id_loc) => {
         const query = 'INSERT INTO PERSONA (nombre, apellido, dni, cuil, fec_nac, email, cel, domicilio, id_loc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
         try {
-            const [result] =  await db.execute(query, [nombre, apellido, dni, cuil, fec_nac, email, cel, domicilio, id_loc]);
-            // Devolver el ID del registro insertado
-            return result.insertId;
+            await db.execute(query, [nombre, apellido, dni, cuil, fec_nac, email, cel, domicilio, id_loc]);
         } catch (error) {
             throw new Error('Error al crear la persona: ' + error.message);
         }
@@ -68,4 +66,4 @@ const Persona = {
     }
 };
 
-module.exports = Persona;
+module.exports = Register;
