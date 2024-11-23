@@ -137,7 +137,22 @@ const Usuario = {
         } catch (error) {
             throw new Error('Error al eliminar el usuario: ' + error.message);
         }
-    }
+    },
+
+        //un metodo que utiliza la funcion del login para saber si existe ese usuario o no
+        findByNomusr: async (nombre_usr) => {
+            try {
+                const consulta = `SELECT p.nombre, p.apellido, u.nombre_usr, u.psw_usr
+                                    FROM usuario u INNER JOIN persona p ON u.id_pers = p.id_pers AND u.nombre_usr = ?`;
+                const [result] = await db.execute(consulta, [nombre_usr]);
+                if (result.length == 0) {
+                    throw new Error(`Usuario no encontrado con el nombre : ${nombre_usr}`);
+                }
+                return result; //si no saltó el error en el if anterior entoces se devuelve el resultado
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
 };
 
 module.exports = Usuario;

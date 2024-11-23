@@ -96,11 +96,12 @@ async function eliminar_usuario(req, res) {
 async function login(req, res) {
     try {
         const { nombre_usr, psw_usr } = req.body;
-        const [result] = await model.findByMail(nombre_usr);
+        const [result] = await model.findByNomusr(nombre_usr);
         const iguales = bcrypt.compareSync(psw_usr, result.psw_usr);
         if (iguales) {
             let user = {
-                rol_usr: result.rol_usr,
+                nombre: result.nombre,
+                apellido: result.apellido,
                 nombre_usr: result.nombre_usr,
             }
             jwt.sign(user, 'ultraMegaSecretPass', { expiresIn: '10000s' }, (err, token) => {
