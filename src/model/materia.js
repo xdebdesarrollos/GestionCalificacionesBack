@@ -35,15 +35,15 @@ const materia = {
     update: async (nom_materia, id_materia) => {
         const query = 'UPDATE MATERIA SET nom_materia = ? WHERE id_materia = ?';
         try {
-            const result = await db.execute(query, [id_materia]);
+            const result = await db.execute(query, [nom_materia, id_materia]);
             if (result.affectedRows === 0) {
-                const error = new Error(`No se encontro la meteria con el nombre: ${nom_materia}`);
+                const error = new Error(`No se encontro la materia con el nombre: ${nom_materia}`);
                 error.statusCode = 404;
                 throw error;
             }
-            return { message: "Persona actualizada con exito", detail: result };
+            return { message: "Materia actualizada con exito", detail: result };
         } catch (error) {
-            throw new Error('Error al actualizar la persona: ' + error.message);
+            throw new Error('Error al actualizar la Materia: ' + error.message);
         }
     },
 

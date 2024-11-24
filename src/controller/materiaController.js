@@ -11,7 +11,7 @@ const { materiaRules, validate } = require('../middleware/validations.js');
 router.get('/', listar_materias);
 router.get('/:nom_materia', buscarPorMateria);
 router.post('/', materiaRules(), validate, crear_materia);
-router.put('/:nom_materia', actualizar_materia);
+router.put('/:id_materia', actualizar_materia);
 router.delete('/:nom_materia', eliminar_materia);
 
 // Funciones CRUD
