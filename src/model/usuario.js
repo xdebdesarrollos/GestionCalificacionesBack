@@ -142,7 +142,7 @@ const Usuario = {
         //un metodo que utiliza la funcion del login para saber si existe ese usuario o no
         findByNomusr: async (nombre_usr) => {
             try {
-                const consulta = `SELECT p.nombre, p.apellido, u.nombre_usr, u.psw_usr
+                const consulta = `SELECT p.nombre, p.apellido, u.rol_usr, u.nombre_usr, u.psw_usr
                                     FROM usuario u INNER JOIN persona p ON u.id_pers = p.id_pers AND u.nombre_usr = ?`;
                 const [result] = await db.execute(consulta, [nombre_usr]);
                 if (result.length == 0) {

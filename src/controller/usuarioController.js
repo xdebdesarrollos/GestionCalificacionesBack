@@ -103,6 +103,7 @@ async function login(req, res) {
                 nombre: result.nombre,
                 apellido: result.apellido,
                 nombre_usr: result.nombre_usr,
+                rol_usr: result.rol_usr,
             }
             jwt.sign(user, 'ultraMegaSecretPass', { expiresIn: '10000s' }, (err, token) => {
                 if (err) {
